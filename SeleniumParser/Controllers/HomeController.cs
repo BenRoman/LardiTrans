@@ -5,81 +5,40 @@ using OpenQA.Selenium;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using RetrieveAndSetDataFromQueue.Models;
+using RetrieveAndSetDataFromQueue.Services;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace RetrieveAndSetDataFromQueue.Controllers
 {
+
+    [RoutePrefix("Home")]
     public class HomeController : Controller
     {
-
-        public List<TransportationInfo> transInfo = new List<TransportationInfo>();
-        private readonly TransContext db = new TransContext();
-
+        private Task<HttpResponseMessage> currencyState;
+        private List<TransportationInfo> transportationInfos;
 
         public HomeController()
         {
-            //List<TransportationInfo> items = db.Transportations.Find(new BsonDocument()).ToList();
-            List<TransportationInfo> items = new List<TransportationInfo>();
-
-            if (items.Count > 0)
-            {
-                this.transInfo = items;
-            }
-            else
-            {
-                retrieveDataFromTheQueue();
-                db.SetMany(this.transInfo);
-            }
+            HttpClient client = new HttpClient();
+            currencyState = client.GetAsync("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5");
+            this.transportationInfos = DataService.Instance.transInfo;
         }
-
+       
         public ActionResult Index()
         {
-            return View(this.transInfo);
+            
+            var currencyList = JsonConvert.DeserializeObject<List<Currency>>(this.currencyState.Result.Content.ReadAsStringAsync().Result);
+            return View(currencyList);
         }
-        
-
-        public void retrieveDataFromTheQueue()
+        [Route("list")]
+        public ActionResult AllTransportations()
         {
-            var factory = new ConnectionFactory()
-            {
-                HostName = "localhost",
-                Port = 5672,
-                UserName = "guest",
-                Password = "guest"
-            };
-
-            var received = false;
-
-            using (var connection = factory.CreateConnection())
-            {
-                using (var model = connection.CreateModel())
-                {
-                    model.QueueDeclare("TranspotrationQueue", true, false, false);
-
-                    var consumer = new EventingBasicConsumer(model);
-
-                    consumer.Received += (eventModel, args) =>
-                    {
-                        string jsonStr = Encoding.UTF8.GetString(args.Body.ToArray());
-                        List<TransportationInfo> transInfos = JsonConvert.DeserializeObject<List<TransportationInfo>>(jsonStr);
-                        this.transInfo = transInfos;
-                        received = true;
-
-                    };
-
-                    model.BasicConsume("TranspotrationQueue", true, consumer);
-                    while (!received)
-                    {
-                        Task.Delay(0);
-                    }
-                }
-            }
-
+            return View(this.transportationInfos);
         }
-
     }
 }

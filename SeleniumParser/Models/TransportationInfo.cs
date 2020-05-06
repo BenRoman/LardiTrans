@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,8 @@ namespace RetrieveAndSetDataFromQueue.Models
 {
     public class TransportationInfo
     {
-        public ObjectId _id { get; set; }
+        [BsonId]
+        public long transId { get; set; }
         public string loadingDate { get; set; }
         public string vehicleType { get; set; }
         public string cargoDescription { get; set; }

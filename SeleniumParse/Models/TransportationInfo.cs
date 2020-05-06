@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,8 @@ namespace SeleniumParse.Models
 {
     public class TransportationInfo
     {
+        [BsonId]
+        public long transId { get; set; }
         public string loadingDate { get; set; }
         public string vehicleType { get; set; }
         public string cargoDescription { get; set; }
@@ -17,8 +20,9 @@ namespace SeleniumParse.Models
         public string routFromCountry { get; set; }
         public string routToCountry { get; set; }
 
-        public TransportationInfo(string date, string vtype, string cargodes, string payment, string from, string to, string fromCo, string toCo)
+        public TransportationInfo(long id, string date, string vtype, string cargodes, string payment, string from, string to, string fromCo, string toCo)
         {
+            this.transId = id;
             this.loadingDate = date;
             this.vehicleType = vtype;
             this.cargoDescription = cargodes;

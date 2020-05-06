@@ -1,4 +1,6 @@
-﻿using MongoDB.Bson;
+﻿using GraphQL;
+using GraphQL.Types;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using OpenQA.Selenium;
@@ -17,9 +19,11 @@ namespace SeleniumParse
 {
     class Program
     {
+        public static IWebDriver driver;
+
         public static List<TransportationInfo> FetchDataFromWebSite()
         {
-            IWebDriver driver = new ChromeDriver();
+            driver = new ChromeDriver();
             driver.Url = "https://lardi-trans.com/de/";
 
             driver.Manage().Window.Maximize();
@@ -44,10 +48,6 @@ namespace SeleniumParse
             wait.Until(ExpectedConditions.StalenessOf(element));
             wait.Until(ExpectedConditions.ElementToBeClickable(locator));
 
-
-
-
-            IList<IWebElement> record22s = driver.FindElements(By.ClassName("ps_search-result_data-item"));
             IList<IWebElement> records = driver.FindElements(By.ClassName("ps_search-result_data-item"))
                 .Select(el => el.FindElement(By.ClassName("ps_data_wrapper"))).ToList();
 
@@ -60,11 +60,7 @@ namespace SeleniumParse
             List<TransportationInfo> transportationInfos = new List<TransportationInfo>();
             foreach (var record in records)
             {
-                //var loadingDate = record.FindElement(By.ClassName("ps_data_load_date__mobile-info"))
-                //    .FindElement(By.TagName("span")).Text;
-                //var vehicleType = record.
-                //var rr = record.FindElements(By.ClassName("ps_data_load_date"));
-                //var rr1 = record.FindElements(By.ClassName("ps_data_load_date__mobile-info"));
+                var transId = Convert.ToInt32(record.GetAttribute("data-ps-id"));
                 var loadingDate = record.GetValueByClassName("ps_data_load_date__mobile-info");
                 var vehicleType = record.GetValueByClassName("ps_data_transport__mobile");
                 var cargoDesc = record.GetValueByClassName("ps_data_cargo__mobile");
@@ -75,8 +71,10 @@ namespace SeleniumParse
                 var bothCountries = record.FindElement(By.ClassName("ps_data_direction")).GetInnerHtml().Split('-');
                 var routFromCountry = bothCountries[0];
                 var routToCountry = bothCountries[1];
-                transportationInfos.Add(new TransportationInfo(loadingDate, vehicleType, cargoDesc, paymentType, routFrom, routTo, routFromCountry, routToCountry));
+                transportationInfos.Add(new TransportationInfo(transId, loadingDate, vehicleType, cargoDesc, paymentType, routFrom, routTo, routFromCountry, routToCountry));
             }
+
+            driver.Close();
             return transportationInfos;
         }
 
@@ -97,55 +95,26 @@ namespace SeleniumParse
                     model.QueueDeclare("TranspotrationQueue", true, false, false);
 
                     var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(infos));
+                    //var body = Encoding.UTF8.GetBytes("Hello world ");
                     model.BasicPublish(String.Empty, "TranspotrationQueue", body: body);
                 }
             }
         }
 
+        public async static Task loopWithTimer(TimeSpan timeSpan)
+        {
+            //List<TransportationInfo> items = new List<TransportationInfo>();
+            List<TransportationInfo> items = FetchDataFromWebSite();
+            RabbitMQSet(items);
+            await Task.Delay(timeSpan);
+        }
+
         static void Main(string[] args)
         {
-            List<TransportationInfo> items = FetchDataFromWebSite();
-
-            RabbitMQSet(items);
-
-
-
-            //SaveDocs().GetAwaiter().GetResult();
-
-            Console.ReadLine();
-
-
-        }
-
-        private static async Task SaveDocs()
-        {
-            string connectionString = "mongodb://localhost";
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase("transInfo");
-            var collection = database.GetCollection<Person>("infos");
-            Person person1 = new Person
+            while (true)
             {
-                Name = "Jack",
-                Age = 29,
-                Languages = new List<string> { "english", "german" },
-                Company = new Company
-                {
-                    Name = "Google"
-                }
-            };
-            await collection.InsertOneAsync(person1);
+                loopWithTimer(TimeSpan.FromMinutes(60)).Wait();
+            }
         }
-    }
-    class Person
-    {
-        public ObjectId Id { get; set; }
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public Company Company { get; set; }
-        public List<string> Languages { get; set; }
-    }
-    class Company
-    {
-        public string Name { get; set; }
     }
 }

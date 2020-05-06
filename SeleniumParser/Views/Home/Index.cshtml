@@ -1,78 +1,65 @@
-﻿@model IEnumerable<RetrieveAndSetDataFromQueue.Models.TransportationInfo>
+﻿@model IEnumerable<RetrieveAndSetDataFromQueue.Models.Currency>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="currency">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+    @Html.ActionLink("View all transportations ", "list")
+
+</div>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.loadingDate)
+            From
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.vehicleType)
+            To
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.cargoDescription)
+            @Html.DisplayNameFor(model => model.buy)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.paymentType)
+            @Html.DisplayNameFor(model => model.sale)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.routFrom)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.routTo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.routFromCountry)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.routToCountry)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.loadingDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.vehicleType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cargoDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.paymentType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.routFrom)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.routTo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.routFromCountry)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.routToCountry)
-        </td>
 
     </tr>
-}
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ccy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.base_ccy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.buy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sale)
+            </td>
+
+        </tr>
+    }
 
 </table>
 
-
 <style>
-    th, td {
-        border-right: 1px solid gray;
+    .currency {
+        height: 200px;
+        position: relative;
+    }
+
+    .currency a {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
     }
 </style>
+
