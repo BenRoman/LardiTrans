@@ -1,0 +1,65 @@
+﻿@model IEnumerable<RetrieveAndSetDataFromQueue.Models.Currency>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="currency">
+
+    @Html.ActionLink("View all transportations ", "list")
+
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            From
+        </th>
+        <th>
+            To
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.buy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sale)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ccy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.base_ccy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.buy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sale)
+            </td>
+
+        </tr>
+    }
+
+</table>
+
+<style>
+    .currency {
+        height: 200px;
+        position: relative;
+    }
+
+    .currency a {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 30px;
+    }
+</style>
+

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<RetrieveAndSetDataFromQueue.Models.TransportationInfo>
+
+@{
+    ViewBag.Title = "AllTransportations";
+}
+
+<h2>AllTransportations</h2>
+
+<table class="table">
+    <tr>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.loadingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.vehicleType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cargoDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.paymentType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.routFrom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.routTo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.routFromCountry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.routToCountry)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.loadingDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vehicleType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cargoDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.paymentType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.routFrom)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.routTo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.routFromCountry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.routToCountry)
+        </td>
+        
+    </tr>
+}
+
+</table>
+
+<style>
+    th, td{
+        border-right: 1px solid gray;
+    }
+
+    th{
+        background: #417b7b;
+        color: #ffffff;
+    }
+</style>
