@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetrieveAndSetDataFromQueue
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeleniumParser", "SeleniumParse\SeleniumParser.csproj", "{4378D314-2235-4F86-8311-5D55900B0B43}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphGL", "GraphGL\GraphGL.csproj", "{B7EAC669-7814-47AB-B979-F24316201E2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4378D314-2235-4F86-8311-5D55900B0B43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4378D314-2235-4F86-8311-5D55900B0B43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4378D314-2235-4F86-8311-5D55900B0B43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7EAC669-7814-47AB-B979-F24316201E2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7EAC669-7814-47AB-B979-F24316201E2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7EAC669-7814-47AB-B979-F24316201E2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7EAC669-7814-47AB-B979-F24316201E2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
