@@ -26,6 +26,10 @@ namespace GraphGL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(builer => builer.AddPolicy("Cors-policy",
+                             opt => opt.AllowAnyOrigin()
+                                     .AllowAnyHeader()
+                                     .AllowAnyMethod()));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -42,6 +46,7 @@ namespace GraphGL
             //    app.UseHsts();
             //}
 
+            app.UseCors("Cors-policy");
             //app.UseHttpsRedirection();
             app.UseGraphiQl("/graphql");
 
