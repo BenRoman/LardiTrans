@@ -45,7 +45,7 @@ namespace GraphGL
                     Genre = "Mystery"
                 }
                 );
-
+                
                 db.SaveChanges();
             }
 

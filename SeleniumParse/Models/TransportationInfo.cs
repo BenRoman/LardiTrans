@@ -11,6 +11,7 @@ namespace SeleniumParse.Models
     {
         [BsonId]
         public long transId { get; set; }
+        public int amountOfLikes { get; set; }
         public string loadingDate { get; set; }
         public string vehicleType { get; set; }
         public string cargoDescription { get; set; }
@@ -31,6 +32,7 @@ namespace SeleniumParse.Models
             this.routTo = to;
             this.routFromCountry = fromCo;
             this.routToCountry = toCo;
+            this.amountOfLikes = 0;
         }
 
     }

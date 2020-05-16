@@ -1,5 +1,6 @@
 export type TransportationInfo = {
       transId: number;
+      amountOfLikes: number;
       loadingDate: string;
       vehicleType: string;
       cargoDescription: string;
@@ -13,3 +14,6 @@ export type TransportationInfo = {
 export type Query = {
     transportation: TransportationInfo[];
 }
+export type Mutation = {
+    updateLikes(id: number, amountOfLikes: number): String
+  }

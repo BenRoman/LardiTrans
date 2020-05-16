@@ -49,7 +49,7 @@ namespace GraphGL.Graphql
             using (var db = new TransContext())
             {
                 return db.Transportations.AsQueryable().ToList();
-                
+
             }
         }
 

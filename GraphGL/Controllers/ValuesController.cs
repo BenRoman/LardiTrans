@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GraphGL.Database;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GraphGL.Controllers
@@ -14,6 +15,8 @@ namespace GraphGL.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            //TransContext ctx = new TransContext();
+            //ctx.editLikes(268681810, 3);
             return new string[] { "value1", "value2" };
         }
 

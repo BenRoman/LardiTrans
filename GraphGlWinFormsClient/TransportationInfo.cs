@@ -1,17 +1,13 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace GraphGL.Database
+namespace SeleniumParse.Models
 {
     public class TransportationInfo
     {
-        [BsonId]
-        public long transId { get; set; }
-        public int amountOfLikes { get; set; }
         public string loadingDate { get; set; }
         public string vehicleType { get; set; }
         public string cargoDescription { get; set; }
@@ -21,8 +17,7 @@ namespace GraphGL.Database
         public string routFromCountry { get; set; }
         public string routToCountry { get; set; }
 
+       
+
     }
-
-
-
 }

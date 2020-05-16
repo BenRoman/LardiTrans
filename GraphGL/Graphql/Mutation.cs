@@ -17,5 +17,15 @@ namespace GraphGL.Graphql
                 return author;
             }
         }
+
+
+        [GraphQLMetadata("updateLikes")]
+        public string UpdateItem(long id, int amountOfLikes)
+        {
+            using (var db = new TransContext())
+            {
+                return db.editLikes(id, amountOfLikes);
+            }
+        }
     }
 }

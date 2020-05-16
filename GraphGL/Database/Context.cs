@@ -39,6 +39,14 @@ namespace GraphGL.Database
         {
             await Transportations.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
         }
+
+        public string editLikes(long id, int amountOfLikes)
+        {
+            var result = Transportations.UpdateOne(
+                new BsonDocument("_id", id),
+                new BsonDocument("$set", new BsonDocument("amountOfLikes", amountOfLikes)));
+            return $"знайдено: {result.MatchedCount}; оновлено: {result.ModifiedCount}";
+        }
        
     }
 }

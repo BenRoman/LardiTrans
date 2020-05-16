@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { GraphGlService } from 'src/app/services/graph-gl.service';
-import { Apollo } from 'apollo-angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
-import gql from 'graphql-tag';
-import { Observable } from 'rxjs';
+import { Apollo } from 'apollo-angular';
 import { map } from 'rxjs/operators'
-import { TransportationInfo, Query } from 'src/app/types/TransportationInfo';
+import { Observable } from 'rxjs';
+import gql from 'graphql-tag';
+
+import { TransportationInfo, Query, Mutation } from 'src/app/types/TransportationInfo';
 
 @Component({
   selector: 'transportation',
@@ -14,15 +16,30 @@ import { TransportationInfo, Query } from 'src/app/types/TransportationInfo';
 })
 export class TransportationComponent implements OnInit {
 
-  transinfos: Observable<TransportationInfo[]>;
+  transinfos: TransportationInfo[];
+
+  displayedColumns: string[] = ['action', 'loadingDate', 'vehicleType', 'cargoDescription', 'paymentType', 'routFrom', 'routTo', 'routFromCountry', 'routToCountry'];
+  dataSource = new MatTableDataSource<TransportationInfo>();
+
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
+  
   constructor(private apollo: Apollo) { }
 
   ngOnInit() {
-    this.transinfos = this.apollo.watchQuery<Query>({
+    this.apollo.watchQuery<Query>({
       query: gql`
         query transinfos{
           transportation{
+            transId
+            amountOfLikes
             cargoDescription
+            loadingDate
+            paymentType
+            routFrom
+            routFromCountry
+            routTo
+            routToCountry
             vehicleType
           }
         }
@@ -30,11 +47,31 @@ export class TransportationComponent implements OnInit {
     }).valueChanges
       .pipe(
         map(result => result.data.transportation)
-      );
-    // this.graphService.getInfoByQuery().subscribe(
-    //   res => console.log(res)
-    // );
+      ).subscribe(items => { this.transinfos = items;this.dataSource.data = items});
 
+    this.dataSource.paginator = this.paginator;
+  }
+
+  likeModification(elem: TransportationInfo, add: boolean){
+    if(add){
+      elem.amountOfLikes++;
+    }
+    else{
+      elem.amountOfLikes--;
+    }
+    
+
+    var id = elem.transId;
+    var amount = elem.amountOfLikes;
+    
+
+    this.apollo.mutate<Mutation>({
+      mutation: gql`
+      mutation likes($id: ID, $amount: Int){
+        updateLikes(id: $id, amountOfLikes: $amount)
+      }`,
+      variables: {id, amount}
+    }).subscribe(res => alert(res.data.updateLikes));    
   }
 
 }

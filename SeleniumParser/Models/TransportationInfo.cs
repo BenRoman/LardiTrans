@@ -11,6 +11,7 @@ namespace RetrieveAndSetDataFromQueue.Models
     {
         [BsonId]
         public long transId { get; set; }
+        public int amountOfLikes { get; set; }
         public string loadingDate { get; set; }
         public string vehicleType { get; set; }
         public string cargoDescription { get; set; }

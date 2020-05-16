@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+
+    tr:nth-child(even){
+        background: #f5f0f0;
+    }
+    td, th{
+        border-right: 1px solid gray;
+        padding-left: 3px !important;
+        padding-right: 3px !important;
+    }
+
+    .likes-block{
+        display: inline-block;
+        width: 30px;
+        text-align: center;
+    }
+}
+
+
+mat-paginator, .mat-header-row{
+    background: #c3bebe !important;
+}

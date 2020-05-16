@@ -18,42 +18,45 @@ namespace GraphGL.Graphql
         public MySchema()
         {
             this._schema = Schema.For(@"
-          type Book {
-            id: ID
-            name: String,
-            genre: String,
-            published: Date,
-            Author: Author
-          }
+              type Book {
+                id: ID
+                name: String,
+                genre: String,
+                published: Date,
+                Author: Author
+              }
 
-          type Author {
-            id: ID,
-            name: String,
-            books: [Book]
-          }
+              type Author {
+                id: ID,
+                name: String,
+                books: [Book]
+              }
 
-          type TransportationInfo{
-            loadingDate: String
-            vehicleType: String
-            cargoDescription: String
-            paymentType: String
-            routFrom: String
-            routTo: String
-            routFromCountry: String
-            routToCountry: String
-          }
+              type TransportationInfo{
+                transId: ID
+                amountOfLikes: Int
+                loadingDate: String
+                vehicleType: String
+                cargoDescription: String
+                paymentType: String
+                routFrom: String
+                routTo: String
+                routFromCountry: String
+                routToCountry: String
+              }
 
-          type Mutation {
-            addAuthor(name: String): Author
-          }
+              type Mutation {
+                addAuthor(name: String): Author
+                updateLikes(id: ID, amountOfLikes: Int): String
+              }
 
-          type Query {
-              books: [Book]
-              author(id: ID): Author,
-              authors: [Author]
-              hello: String
-              transportation: [TransportationInfo]
-          }
+              type Query {
+                  books: [Book]
+                  author(id: ID): Author,
+                  authors: [Author]
+                  hello: String
+                  transportation: [TransportationInfo]
+              }
       ", _ =>
             {
                 _.Types.Include<Query>();

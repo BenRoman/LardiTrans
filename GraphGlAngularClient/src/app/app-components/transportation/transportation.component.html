@@ -1,5 +1,66 @@
-<p>transportation works!</p>
-
-<div *ngFor="let trans of transinfos | async">
+<!-- 
+<div *ngFor="let trans of transinfos">
     <h5>{{trans.vehicleType}}</h5>
+    <h5>{{trans.routFrom}}</h5>
+</div> -->
+
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> action </th>
+            <td mat-cell *matCellDef="let element">
+                <div>
+                    <button mat-button class="btn arrow mx-1" (click)="likeModification(element, true)"> +</button>
+                    <div class="likes-block">{{element.amountOfLikes}}</div>
+                    <button mat-button class="btn blue btn-sm" (click)="likeModification(element, false)">-</button>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="loadingDate">
+            <th mat-header-cell *matHeaderCellDef> дата </th>
+            <td mat-cell *matCellDef="let element"> {{element.loadingDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="vehicleType">
+            <th mat-header-cell *matHeaderCellDef> тип </th>
+            <td mat-cell *matCellDef="let element"> {{element.vehicleType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cargoDescription">
+            <th mat-header-cell *matHeaderCellDef> опис </th>
+            <td mat-cell *matCellDef="let element"> {{element.cargoDescription}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="paymentType">
+            <th mat-header-cell *matHeaderCellDef> оплата </th>
+            <td mat-cell *matCellDef="let element"> {{element.paymentType}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="routFrom">
+            <th mat-header-cell *matHeaderCellDef> звідки </th>
+            <td mat-cell *matCellDef="let element"> {{element.routFrom}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="routTo">
+            <th mat-header-cell *matHeaderCellDef> куди </th>
+            <td mat-cell *matCellDef="let element"> {{element.routTo}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="routFromCountry">
+            <th mat-header-cell *matHeaderCellDef> експортер </th>
+            <td mat-cell *matCellDef="let element"> {{element.routFromCountry}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="routToCountry">
+            <th mat-header-cell *matHeaderCellDef> імпортер </th>
+            <td mat-cell *matCellDef="let element"> {{element.routToCountry}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons></mat-paginator>
 </div>
