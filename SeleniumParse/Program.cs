@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using RabbitMQ.Client;
+using RetrieveAndSetDataFromQueue.Models;
 using SeleniumParse.Models;
 using SeleniumParser.Helpers;
 using System;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TransportationInfo = RetrieveAndSetDataFromQueue.Models.TransportationInfo;
 
 namespace SeleniumParse
 {
@@ -105,7 +107,9 @@ namespace SeleniumParse
         {
             //List<TransportationInfo> items = new List<TransportationInfo>();
             List<TransportationInfo> items = FetchDataFromWebSite();
-            RabbitMQSet(items);
+            //RabbitMQSet(items);
+            TransContext ctx = new TransContext();
+            ctx.SetMany(items);
             await Task.Delay(timeSpan);
         }
 

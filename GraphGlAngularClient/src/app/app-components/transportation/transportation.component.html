@@ -4,15 +4,15 @@
     <h5>{{trans.routFrom}}</h5>
 </div> -->
 
-<div class="mat-elevation-z8">
+<div *ngIf="loaded" class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef> action </th>
             <td mat-cell *matCellDef="let element">
-                <div>
+                <div class="btn-holder">
                     <button mat-button class="btn arrow mx-1" (click)="likeModification(element, true)"> +</button>
-                    <div class="likes-block">{{element.amountOfLikes}}</div>
+                    <div class="likes-block">{{element.transportationInfo.amountOfLikes}}</div>
                     <button mat-button class="btn blue btn-sm" (click)="likeModification(element, false)">-</button>
                 </div>
             </td>
@@ -20,42 +20,47 @@
 
         <ng-container matColumnDef="loadingDate">
             <th mat-header-cell *matHeaderCellDef> дата </th>
-            <td mat-cell *matCellDef="let element"> {{element.loadingDate}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.transportationInfo.loadingDate}} </td>
         </ng-container>
 
         <ng-container matColumnDef="vehicleType">
             <th mat-header-cell *matHeaderCellDef> тип </th>
-            <td mat-cell *matCellDef="let element"> {{element.vehicleType}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.transportationInfo.vehicleType}} </td>
         </ng-container>
 
         <ng-container matColumnDef="cargoDescription">
             <th mat-header-cell *matHeaderCellDef> опис </th>
-            <td mat-cell *matCellDef="let element"> {{element.cargoDescription}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.transportationInfo.cargoDescription}} </td>
         </ng-container>
 
         <ng-container matColumnDef="paymentType">
             <th mat-header-cell *matHeaderCellDef> оплата </th>
-            <td mat-cell *matCellDef="let element"> {{element.paymentType}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.transportationInfo.paymentType}} </td>
         </ng-container>
 
         <ng-container matColumnDef="routFrom">
             <th mat-header-cell *matHeaderCellDef> звідки </th>
-            <td mat-cell *matCellDef="let element"> {{element.routFrom}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.transportationInfo.routFrom}} </td>
         </ng-container>
 
         <ng-container matColumnDef="routTo">
             <th mat-header-cell *matHeaderCellDef> куди </th>
-            <td mat-cell *matCellDef="let element"> {{element.routTo}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.transportationInfo.routTo}} </td>
         </ng-container>
 
         <ng-container matColumnDef="routFromCountry">
             <th mat-header-cell *matHeaderCellDef> експортер </th>
-            <td mat-cell *matCellDef="let element"> {{element.routFromCountry}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.transportationInfo.routFromCountry}} </td>
         </ng-container>
 
         <ng-container matColumnDef="routToCountry">
             <th mat-header-cell *matHeaderCellDef> імпортер </th>
-            <td mat-cell *matCellDef="let element"> {{element.routToCountry}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.transportationInfo.routToCountry}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="%">
+            <th mat-header-cell *matHeaderCellDef> prediction </th>
+            <td mat-cell *matCellDef="let element" [style.background]="getColor(element.percentage)"> {{element.likeProbability}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -63,4 +68,8 @@
     </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons></mat-paginator>
+</div>
+
+<div *ngIf="!loaded" class="waiting">
+    Loading , please wait
 </div>

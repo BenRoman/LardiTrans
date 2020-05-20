@@ -45,6 +45,12 @@ namespace GraphGL.Graphql
                 routToCountry: String
               }
 
+              type TransportationML{
+                transportationInfo: TransportationInfo 
+                likeProbability: Float
+                percentage: Int
+              }
+
               type Mutation {
                 addAuthor(name: String): Author
                 updateLikes(id: ID, amountOfLikes: Int): String
@@ -55,7 +61,7 @@ namespace GraphGL.Graphql
                   author(id: ID): Author,
                   authors: [Author]
                   hello: String
-                  transportation: [TransportationInfo]
+                  transportation: [TransportationML]
               }
       ", _ =>
             {

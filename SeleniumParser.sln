@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphGL", "GraphGL\GraphGL.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphGlWinFormsClient", "GraphGlWinFormsClient\GraphGlWinFormsClient.csproj", "{7EF157F0-B6FA-4304-8323-9C96EBC8CC2A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeleniumParserML.Model", "SeleniumParserML.Model\SeleniumParserML.Model.csproj", "{40786DA5-53B5-45F9-A4CD-5437A17A8296}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeleniumParserML.ConsoleApp", "SeleniumParserML.ConsoleApp\SeleniumParserML.ConsoleApp.csproj", "{44A18B3A-EE06-4AA8-B6E5-5CE861F7D7BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{7EF157F0-B6FA-4304-8323-9C96EBC8CC2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EF157F0-B6FA-4304-8323-9C96EBC8CC2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7EF157F0-B6FA-4304-8323-9C96EBC8CC2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40786DA5-53B5-45F9-A4CD-5437A17A8296}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40786DA5-53B5-45F9-A4CD-5437A17A8296}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40786DA5-53B5-45F9-A4CD-5437A17A8296}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40786DA5-53B5-45F9-A4CD-5437A17A8296}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44A18B3A-EE06-4AA8-B6E5-5CE861F7D7BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44A18B3A-EE06-4AA8-B6E5-5CE861F7D7BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44A18B3A-EE06-4AA8-B6E5-5CE861F7D7BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44A18B3A-EE06-4AA8-B6E5-5CE861F7D7BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

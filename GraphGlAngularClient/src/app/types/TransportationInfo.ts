@@ -11,8 +11,15 @@ export type TransportationInfo = {
       routToCountry: string;
 }
 
+export type TransportationML = {
+    transportationInfo: TransportationInfo ;
+    likeProbability: number;
+    percentage: number;
+}
+
+
 export type Query = {
-    transportation: TransportationInfo[];
+    transportation: TransportationML[];
 }
 export type Mutation = {
     updateLikes(id: number, amountOfLikes: number): String

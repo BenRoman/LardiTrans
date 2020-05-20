@@ -10,6 +10,10 @@ table {
         padding-right: 3px !important;
     }
 
+    .btn-holder{
+        width: 80px;
+    }
+
     .likes-block{
         display: inline-block;
         width: 30px;
@@ -20,4 +24,13 @@ table {
 
 mat-paginator, .mat-header-row{
     background: #c3bebe !important;
+}
+
+.waiting{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    font-size: medium;
+    
 }

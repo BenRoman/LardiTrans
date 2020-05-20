@@ -20,7 +20,19 @@ namespace RetrieveAndSetDataFromQueue.Models
         public string routTo { get; set; }
         public string routFromCountry { get; set; }
         public string routToCountry { get; set; }
-
+        public TransportationInfo(long id, string date, string vtype, string cargodes, string payment, string from, string to, string fromCo, string toCo)
+        {
+            this.transId = id;
+            this.loadingDate = date;
+            this.vehicleType = vtype;
+            this.cargoDescription = cargodes;
+            this.paymentType = payment;
+            this.routFrom = from;
+            this.routTo = to;
+            this.routFromCountry = fromCo;
+            this.routToCountry = toCo;
+            this.amountOfLikes = 0;
+        }
     }
 
 

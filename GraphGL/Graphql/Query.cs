@@ -4,6 +4,8 @@ using System.Linq;
 using GraphGL.Database;
 using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
+using SeleniumParserML.Model;
+using System;
 
 namespace GraphGL.Graphql
 {
@@ -44,11 +46,39 @@ namespace GraphGL.Graphql
         }
 
         [GraphQLMetadata("transportation")]
-        public IEnumerable<TransportationInfo> GetTransInfo()
+        public IEnumerable<TransportationML> GetTransInfo()
         {
             using (var db = new TransContext())
             {
-                return db.Transportations.AsQueryable().ToList();
+                var items = db.Transportations.AsQueryable().ToList();
+                List<TransportationML> transportationMLs = new List<TransportationML>();
+                double min = 0;
+                double max = 0;
+                foreach (var item in items)
+                {
+                    var input = new ModelInput();
+                    input.VehicleType = item.vehicleType;
+                    input.RoutToCountry = item.routToCountry;
+                    ModelOutput result = ConsumeModel.Predict(input);
+                    if(result.Score > max)
+                    {
+                        max = result.Score;
+                    }
+                    if(result.Score < min)
+                    {
+                        min = result.Score;
+                    }
+                    transportationMLs.Add(new TransportationML
+                    {
+                        transportationInfo = item,
+                        likeProbability = result.Score
+                    });
+                }
+                foreach (var item in transportationMLs)
+                {
+                    item.percentage = (int)Math.Round(100 * (item.likeProbability + Math.Abs(min)) / Math.Abs(max - min));
+                }
+                return transportationMLs;
 
             }
         }

@@ -19,4 +19,8 @@
     <PackageReference Include="MongoDB.Driver.Core" Version="2.10.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SeleniumParserML.Model\SeleniumParserML.Model.csproj" />
+  </ItemGroup>
+
 </Project>

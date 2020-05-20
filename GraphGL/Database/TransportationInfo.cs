@@ -24,5 +24,12 @@ namespace GraphGL.Database
     }
 
 
+    public class TransportationML
+    {
+        public TransportationInfo transportationInfo { get; set; }
+        public double likeProbability { get; set; }
+        public int percentage { get; set; }
+    }
+
 
 }
