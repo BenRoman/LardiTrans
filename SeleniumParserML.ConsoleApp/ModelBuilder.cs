@@ -7,13 +7,13 @@ using System.Linq;
 using Microsoft.ML;
 using Microsoft.ML.Data;
 using SeleniumParserML.Model;
-using Microsoft.ML.Trainers.FastTree;
+using Microsoft.ML.Trainers;
 
 namespace SeleniumParserML.ConsoleApp
 {
     public static class ModelBuilder
     {
-        private static string TRAIN_DATA_FILEPATH = @"C:\Users\roman.ben\Desktop\training.csv";
+        private static string TRAIN_DATA_FILEPATH = @"C:\Users\roman.ben\Desktop\system testing.csv";
         private static string MODEL_FILEPATH = @"C:\Users\roman.ben\AppData\Local\Temp\MLVSTools\SeleniumParserML\SeleniumParserML.Model\MLModel.zip";
         // Create MLContext to be shared across the model creation workflow objects 
         // Set a random seed for repeatable/deterministic results across multiple trainings.
@@ -46,9 +46,11 @@ namespace SeleniumParserML.ConsoleApp
         {
             // Data process configuration with pipeline data transformations 
             var dataProcessPipeline = mlContext.Transforms.Categorical.OneHotEncoding(new[] { new InputOutputColumnPair("vehicleType", "vehicleType"), new InputOutputColumnPair("routToCountry", "routToCountry") })
-                                      .Append(mlContext.Transforms.Concatenate("Features", new[] { "vehicleType", "routToCountry" }));
+                                      .Append(mlContext.Transforms.Concatenate("Features", new[] { "vehicleType", "routToCountry" }))
+                                      .Append(mlContext.Transforms.NormalizeMinMax("Features", "Features"))
+                                      .AppendCacheCheckpoint(mlContext);
             // Set the training algorithm 
-            var trainer = mlContext.Regression.Trainers.FastTree(new FastTreeRegressionTrainer.Options() { NumberOfLeaves = 8, MinimumExampleCountPerLeaf = 1, NumberOfTrees = 500, LearningRate = 0.1067408f, Shrinkage = 0.0288449f, LabelColumnName = "amountOfLikes", FeatureColumnName = "Features" });
+            var trainer = mlContext.Regression.Trainers.Sdca(new SdcaRegressionTrainer.Options() { L2Regularization = 1E-05f, L1Regularization = 0.75f, ConvergenceTolerance = 0.1f, Shuffle = false, BiasLearningRate = 0.1f, LabelColumnName = "amountOfLikes", FeatureColumnName = "Features" });
 
             var trainingPipeline = dataProcessPipeline.Append(trainer);
 

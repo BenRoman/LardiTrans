@@ -11,7 +11,7 @@ namespace SeleniumParserML.ConsoleApp
     class Program
     {
         //Dataset to use for predictions 
-        private const string DATA_FILEPATH = @"C:\Users\roman.ben\Desktop\training.csv";
+        private const string DATA_FILEPATH = @"C:\Users\roman.ben\Desktop\system testing.csv";
 
         static void Main(string[] args)
         {
